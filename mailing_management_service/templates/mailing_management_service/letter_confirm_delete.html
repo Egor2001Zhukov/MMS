@@ -1,0 +1,18 @@
+{% extends 'base.html' %}
+
+{% block content %}
+    <div class="row justify-content-md-center text-center">
+        <h1 class="col-6 mb-4 text-center">Вы действительно хотите удалить письмо<br>"{{ object.subject }}"?</h1>
+    </div>
+    <div class="row justify-content-md-center">
+        <div class="col-auto align-items-center">
+            <a href="javascript:history.go(-1);" class="btn btn-primary">Отмена</a>
+        </div>
+        <div class="col-auto align-items-center">
+            <form method="post" enctype="multipart/form-data">
+                {% csrf_token %}
+                <button type="submit" class="btn btn-primary bg-danger">Удалить</button>
+            </form>
+        </div>
+    </div>
+{% endblock %}

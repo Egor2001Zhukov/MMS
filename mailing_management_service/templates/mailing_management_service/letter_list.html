@@ -1,0 +1,39 @@
+{% extends 'base.html' %}
+{% load my_tags %}
+{% block content %}
+    <h1 class="mb-4 text-center">Мои письма
+        <a href="{% url 'mms:create_letter' %}" class="btn btn-outline-primary">+</a></h1>
+    <div class="row align-items-center justify-content-center">
+        {% for object in object_list %}
+            <div class="col-4 d-flex flex-column flex-lg-row align-items-center p-3 rounded-3 shadow-lg m-3"
+                 data-bs-theme="light">
+                <div class="col align-items-center justify-content-center text-center">
+                    <a href="#">
+                        <div class="p-3 btn btn-hover-light rounded-2 align-items-center gap-2 py-2 px-3 lh-sm">
+                            <h1 class="d-block mb-1 fs-4 text-break text-center">{{ object.subject|truncatechars:20 }}</h1>
+                            <small class="text-break text-center">{{ object.body|truncatechars:50 }}</small>
+                        </div>
+                    </a>
+                </div>
+                <div class="d-none d-lg-block vr mx-4 opacity-10">&nbsp;</div>
+                <hr class="d-lg-none">
+                <div class="col-auto pe-3">
+                    <nav>
+                        <ul class="d-flex flex-column gap-2 list-unstyled small">
+                            <li><a href="{% url 'mms:view_letter' pk=object.pk%}"
+                                   class="link-offset-2 link-underline link-underline-opacity-25 link-underline-opacity-75-hover">Посмотреть</a>
+                            </li>
+                            <li><a href="{% url 'mms:update_letter' pk=object.pk%}"
+                                   class="link-offset-2 link-underline link-underline-opacity-25 link-underline-opacity-75-hover">Изменить</a>
+                            </li>
+                            <li><a href="{% url 'mms:delete_letter' pk=object.pk%}"
+                                   class="link-offset-2 link-underline link-underline-opacity-25 link-underline-opacity-75-hover">Удалить</a>
+                            </li>
+                            </li>
+                        </ul>
+                    </nav>
+                </div>
+            </div>
+        {% endfor %}
+    </div>
+{% endblock %}

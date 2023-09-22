@@ -1,0 +1,55 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block content %}
+    {% url 'mms:create_mailing' as create_mailing %}
+
+    <div class="text-center">
+        <div>
+            <h1 class="mt-4">
+                {% if request.path == create_mailing %}
+                    СОЗДАНИЕ РАССЫЛКИ | <a href="{% url 'mms:create_mailing' %}">СОЗДАНИЕ ПИСЬМА</a><br>
+                    <a href="{% url 'mms:create_recipient' %}">ДОБАВИТЬ ПОЛУЧАТЕЛЯ</a>
+                {% else %}
+                    ИЗМЕНЕНИЕ РАССЫЛКИ
+                {% endif %}
+            </h1>
+        </div>
+    </div>
+    <div class="p-3 py-5">
+        <div class="col-3 mt-2 mx-auto">
+            <form method="post" enctype="multipart/form-data">
+                {% csrf_token %}
+                {% for field in form %}
+                    {{ field.label_tag }}
+                    {{ field }}
+                    {% if field.errors %}
+                        <div class="text-danger">
+                            <p>{{ field.errors }}</p>
+                        </div>
+                    {% endif %}
+                    <br>
+                {% endfor %}
+                <div class="row justify-content-md-center">
+                    <div class="col-auto align-items-center">
+                        <a href="javascript:history.go(-1);" class="btn btn-primary">Назад</a>
+                    </div>
+                    <div class="col-auto align-items-center">
+                        <button class="btn btn-primary profile-button" type="submit">
+                            Сохранить
+                        </button>
+                    </div>
+                    {% if form.non_field_errors %}
+                        <div class="alert alert-danger mt-5 ">
+                            <p>{{ form.non_field_errors }}</p>
+                        </div>
+                    {% endif %}
+                </div>
+            </form>
+        </div>
+    </div>
+    <script>
+        const csrf_token = "{{ csrf_token }}"; // Получаем значение CSRF-токена из контекста Django
+    </script>
+    <script src="{% static 'js/change_avatar_script.js' %}"></script>
+{% endblock %}

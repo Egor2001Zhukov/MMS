@@ -1,0 +1,127 @@
+{% load my_tags %}
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>MMS</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="icon" href="{% static 'icons/envelope-paper-heart.svg' %}" type="image/x-icon">
+    <style>
+        .navbar {
+            position: fixed;
+            background: white;
+            top: 0;
+            width: 70%;
+            left: 50%;
+            transform: translateX(-50%);
+        }
+    </style>
+</head>
+<body>
+<div class="container rounded bg-white mb-5 align-items-center">
+    <header id="navbar"
+            class="navbar text-center d-flex flex-wrap align-items-center justify-content-center justify-content-md-between py-3 mb-4 border-bottom">
+        <div class="col-md-1 mb-2 mb-md-0 ">
+            <div
+                    class="d-flex align-items-center mb-3 mb-md-0 me-md-auto link-body-emphasis text-decoration-none">
+                <svg xmlns="http://www.w3.org/2000/svg" class="bi me-2" width="40" height="32" fill="currentColor"
+                     viewBox="0 0 16 16">
+                    <path id="envelope_paper_heart" fill-rule="evenodd"
+                          d="M2 2a2 2 0 0 1 2-2h8a2 2 0 0 1 2 2v1.133l.941.502A2 2 0 0 1 16 5.4V14a2 2 0 0 1-2 2H2a2 2 0 0 1-2-2V5.4a2 2 0 0 1 1.059-1.765L2 3.133V2Zm0 2.267-.47.25A1 1 0 0 0 1 5.4v.817l1 .6v-2.55Zm1 3.15 3.75 2.25L8 8.917l1.25.75L13 7.417V2a1 1 0 0 0-1-1H4a1 1 0 0 0-1 1v5.417Zm11-.6 1-.6V5.4a1 1 0 0 0-.53-.882L14 4.267v2.55ZM8 2.982C9.664 1.309 13.825 4.236 8 8 2.175 4.236 6.336 1.31 8 2.982Zm7 4.401-4.778 2.867L15 13.117V7.383Zm-.035 6.88L8 10.082l-6.965 4.18A1 1 0 0 0 2 15h12a1 1 0 0 0 .965-.738ZM1 13.116l4.778-2.867L1 7.383v5.734Z"></path>
+                </svg>
+                <span class="fs-4">MMS</span>
+            </div>
+        </div>
+        <ul class="nav nav-pills col-12 col-md-auto mb-2 justify-content-center mb-md-0">
+            <li class="nav-item text"><a href="{% url 'main' %}" class="nav-link text-black"
+                                         aria-current="page">Главная</a></li>
+            <li class="nav-item"><a href="{% url 'blog:blogentry_list' %}" class="nav-link text-black">Блог</a></li>
+            <li class="nav-item"><a href="#" class="nav-link text-black">О нас</a></li>
+            {% if user|is_moderator %}
+                <li class="nav-item"><a href="{% url 'moderator_interface' %}" class="nav-link text-black">Модератор</a>
+                </li>
+            {% endif %}
+        </ul>
+        {% if user.is_authenticated %}
+            <div class="dropdown text-end">
+                <a href="#" class="d-block link-body-emphasis text-decoration-none dropdown-toggle"
+                   data-bs-toggle="dropdown" aria-expanded="false">
+                    <img src="/media/{{ user.avatar }}" alt="/media/{{ user.avatar }}" height="50"
+                         class="rounded-circle">
+                </a>
+                <ul class="dropdown-menu gap-1 p-2 rounded-3 mx-0 shadow w-220px text-small"
+                    data-bs-theme="light">
+                    <li><a class="dropdown-item rounded-2" href="{% url 'mms:mailing_list' %}">Мои рассылки</a>
+                    </li>
+                    <li><a class="dropdown-item rounded-2" href="{% url 'mms:letter_list' %}">Список писем</a>
+                    </li>
+                    <li><a class="dropdown-item rounded-2" href="{% url 'mms:recipient_list' %}">Список получателей</a>
+                    </li>
+                    <li><a class="dropdown-item rounded-2" href="{% url 'user:profile' %}">Профиль</a></li>
+                    <li>
+                        <hr class="dropdown-divider">
+                    </li>
+                    <li><a class="dropdown-item rounded-2" href="{% url 'user:logout' %}">Выйти</a></li>
+                </ul>
+            </div>
+        {% else %}
+            <div class="text-end">
+                <a href="{% url 'user:login' %}">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="40" height="32" fill="currentColor"
+                         class="bi bi-person-circle" viewBox="0 0 16 16">
+                        <path d="M11 6a3 3 0 1 1-6 0 3 3 0 0 1 6 0z"></path>
+                        <path fill-rule="evenodd"
+                              d="M0 8a8 8 0 1 1 16 0A8 8 0 0 1 0 8zm8-7a7 7 0 0 0-5.468 11.37C3.242 11.226 4.805 10 8 10s4.757 1.225 5.468 2.37A7 7 0 0 0 8 1z"></path>
+                    </svg>
+                </a>
+            </div>
+        {% endif %}
+    </header>
+    <div id="content">
+        {% block content %}
+        {% endblock %}
+    </div>
+</div>
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.1/dist/umd/popper.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.min.js"></script>
+<script>
+    // Получаем текущий URL
+    let currentUrl = window.location.pathname;
+
+    // Ищем пункты меню, у которых ссылка совпадает с текущим URL
+    let menuLinks = document.querySelectorAll('.nav-link');
+    let dropdownLinks = document.querySelectorAll('.dropdown-item');
+    menuLinks.forEach(function (link) {
+        if (link.getAttribute('href') === currentUrl) {
+            link.classList.add('active');
+            link.classList.remove('text-black')
+        }
+    });
+    dropdownLinks.forEach(function (link) {
+        if (link.getAttribute('href') === currentUrl) {
+            link.classList.add('active');
+        }
+    });
+</script>
+<script>
+    // Получаем ссылки на элементы "navbar" и "content"
+    let navbar = document.getElementById("navbar");
+    let content = document.getElementById("content");
+
+    // Функция для обновления высоты контента на основе высоты навбара
+    function updateContentHeight() {
+        let navbarHeight = navbar.offsetHeight;
+        content.style.marginTop = (navbarHeight + 50) + "px";
+    }
+
+    // Вызываем функцию для первичной установки высоты
+    updateContentHeight();
+
+    // Добавляем обработчик события изменения размера окна
+    window.addEventListener("resize", updateContentHeight);
+</script>
+</body>
+</html>

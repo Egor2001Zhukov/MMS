@@ -1,0 +1,18 @@
+{% extends 'base.html' %}
+{% load static %}
+
+
+
+{% block content %}
+    <h2 class="pb-2 border-bottom text-center">Получатель: "{{ object.email }}"</h2>
+    <div class="row g-4 py-5 row-cols-1 row-cols-lg-1 text-center">
+    </div>
+    <div class="row justify-content-md-center align-items-center">
+        <div class="col-auto">
+            <a href="javascript:history.go(-1);" class="btn btn-primary">Назад</a>
+        </div>
+        <div class="col-auto">
+            <a href="{% url 'mms:update_recipient' pk=object.pk %}" class="btn btn-primary profile-button"
+               type="submit">Изменить</a>
+        </div>
+{% endblock %}

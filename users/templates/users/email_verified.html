@@ -1,0 +1,17 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Email Verification Successful</title>
+</head>
+<body>
+<div class="text-center">
+    {% csrf_token %}
+    <h3 class="card-title">Подтвердите вашу электронную почту</h3>
+    <p>Поздравляем, Вы зарегистрировались на нашем портале!</p>
+    <p>Для завершения регистрации и подтверждения вашей электронной почты, пожалуйста, кликните по следующей ссылке:</p>
+    <p><a href="{{ domain }}{% url 'user:verify_email' token=token %}">Подтвердить электронную почту</a></p>
+</div>
+</body>
+</html>

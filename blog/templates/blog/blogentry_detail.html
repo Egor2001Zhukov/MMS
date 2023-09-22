@@ -1,0 +1,17 @@
+{% extends 'base.html' %}
+{% load my_tags %}
+
+{% block content %}
+    <div class="pricing-header p-3 pb-md-4 mx-auto text-center">
+        <h1 class="display-4 fw-normal text-body-emphasis">{{ object.title }}</h1>
+    </div>
+    <div class="row justify-content-center">
+        <div class="col-md-auto">
+            <p>{{ object.content }}</p>
+            <div class="align-self-center text-center">
+                <img src="{{ object.img|mediapath }}" alt="{{ object.title }}" height="500">
+                <p>Просмотров {{ object.views }}</p>
+            </div>
+        </div>
+    </div>
+{% endblock %}

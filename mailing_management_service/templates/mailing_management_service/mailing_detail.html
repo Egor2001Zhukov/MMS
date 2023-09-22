@@ -1,0 +1,37 @@
+{% extends 'base.html' %}
+{% load static %}
+
+
+
+{% block content %}
+    <h2 class="pb-2 border-bottom text-center">Рассылка: "{{ object.name|title }}"</h2>
+    <div class="row g-4 py-5 row-cols-1 row-cols-lg-4 text-center">
+        <div class="feature col">
+            <h3 class="fs-2 text-body-emphasis">Описание: </h3>
+            <p>{{ object.description }}</p>
+        </div>
+        <div class="feature col">
+            <h3 class="fs-2 text-body-emphasis">Время рассылки: </h3>
+            <p>{{ object.time }}</p>
+        </div>
+        <div class="feature col">
+            <h3 class="fs-2 text-body-emphasis">Письмо: </h3>
+            <p>{% if object.letter is None %}
+                Не выбрано{% else %}{{ object.letter }}{% endif %}</p>
+        </div>
+        <div class="feature col">
+            <h3 class="fs-2 text-body-emphasis">Периодичность: </h3>
+            <p>{% if object.periodicity == 1 %}
+                Ежедневно{% elif object.periodicity == 7 %}Еженедельно{% else %}Ежемесячно{% endif %}</p>
+        </div>
+    </div>
+    <div class="row justify-content-md-center">
+        <div class="col-auto align-items-center">
+            <a href="javascript:history.go(-1);" class="btn btn-primary">Назад</a>
+        </div>
+        <div class="col-auto align-items-center">
+            <a href="{% url 'mms:update_mailing' pk=object.pk %}" class="btn btn-primary profile-button"
+               type="submit">Изменить</a>
+        </div>
+    </div>
+{% endblock %}

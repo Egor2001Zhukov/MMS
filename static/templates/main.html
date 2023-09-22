@@ -1,0 +1,29 @@
+{% extends 'base.html' %}
+
+
+{% block content %}
+    <main class="row justify-content-center align-items-center">
+        <div class="col-lg-5 col-auto">
+            <h1 class="text-center mb-5">Сайт для создания и управления рассылками электронных писем</h1>
+            <p class="text-center fs-5 mb-5">Добавьте своей компании узнаваемости и не забывайте подогревать интерес
+                клиентов. А мы вам в этом поможем🤑</p>
+            <p class="text-center">
+                <a href="{% url 'mms:create_mailing' %}" class="btn btn-outline-primary">Создать рассылку</a>
+            </p>
+        </div>
+    </main>
+    <div class="row g-4 py-5 row-cols-1 row-cols-lg-3 text-center">
+        <div class="feature col">
+            <h3 class="fs-2 text-body-emphasis">Рассылок: </h3>
+            <h2 class="bg-primary rounded-5 text-white">{{ mailing }}</h2>
+        </div>
+        <div class="feature col">
+            <h3 class="fs-2 text-body-emphasis">Активных: </h3>
+            <h2 class="bg-primary rounded-5 text-white">{{ mailing_active }}</h2>
+        </div>
+        <div class="feature col">
+            <h3 class="fs-2 text-body-emphasis">Клиентов: </h3>
+            <h2 class="bg-primary rounded-5 text-white">{{ users }}</h2>
+        </div>
+    </div>
+{% endblock %}

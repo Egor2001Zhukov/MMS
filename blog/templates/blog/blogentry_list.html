@@ -1,0 +1,50 @@
+{% extends 'base.html' %}
+{% load my_tags %}
+
+{% block content %}
+    <style>
+        .bd-placeholder-img {
+            font-size: 1.125rem;
+            text-anchor: middle;
+            -webkit-user-select: none;
+            -moz-user-select: none;
+            user-select: none;
+        }
+    </style>
+    <h1 class="mb-4 text-center">Блог
+{#        <a href="{% url 'blog:create_blog_entry' %}" class="btn btn-outline-primary">+</a>#}
+    </h1>
+    <div class="container">
+        <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 g-3 text-center justify-content-center align-items-center">
+            {% for object in object_list %}
+                <div class="col">
+                    <div class="card shadow-sm">
+                        <svg class="bd-placeholder-img card-img-top" width="100%" height="225"
+                             xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Placeholder: Thumbnail"
+                             preserveAspectRatio="xMidYMid slice" focusable="false">
+                            <title>{{ object.title }}</title>
+                            <image href="{{ object.img|mediapath }}" width="100%" height="100%"
+                                   preserveAspectRatio="xMidYMid slice"></image>
+                            <rect width="100%" height="100%" fill="blue" opacity="0.7"></rect>
+                            <text x="50%" y="50%" fill="#eceeef" dy=".3em">{{ object.title }}</text>
+                        </svg>
+                        <div class="card-body">
+                            <p class="card-text">{{ object.content|truncatechars:60 }}</p>
+                            <div class="d-flex justify-content-between align-items-center">
+                                <div class="btn-group">
+                                    <a href="{% url "blog:view_blog_entry" slug=object.slug %}"
+                                       class="btn btn-sm btn-outline-secondary">View</a>
+{#                                    <a href="{% url "blog:update_blog_entry" slug=object.slug %}"#}
+{#                                       class="btn btn-sm btn-outline-secondary">Edit</a>#}
+{#                                    <a href="{% url "blog:delete_blog_entry" slug=object.slug %}"#}
+{#                                       class="btn btn-sm btn-outline-secondary text-danger">Delete</a>#}
+                                </div>
+                                <small class="text-body-secondary">{{ object.public_date }}</small>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            {% endfor %}
+        </div>
+    </div>
+{% endblock %}
